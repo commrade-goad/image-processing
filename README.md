@@ -1,6 +1,12 @@
 # Image Processing Notes.
 
+To open shell:
+
+```sh
+nix-shell
+```
+
+## Week 1
+## Week 2
 ## Week 3
-- Projection (translate, transpose, rotate, scale, affine, perspective)
-- Histogram
-- Color Conversion
+[week3.md](./week3.md)
