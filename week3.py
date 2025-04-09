@@ -102,6 +102,17 @@ def create_histogram(image, output):
     cv.imwrite(output, hist_img)
     pass
 
+def change_colorspace(image, output):
+    grayscale_img = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+    cv.imwrite(output[0], grayscale_img)
+
+    hsv_img = cv.cvtColor(image, cv.COLOR_RGB2HSV)
+    h_chan, s_chan, v_chan = cv.split(hsv_img)
+    cv.imwrite(output[1], h_chan)
+    cv.imwrite(output[2], s_chan)
+    cv.imwrite(output[3], v_chan)
+    pass
+
 if __name__ == "__main__":
     image = cv.imread('image.jpg')
     image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
@@ -113,6 +124,12 @@ if __name__ == "__main__":
     perspective_transform_image(image, 'image-perspectivet.png')
     transpose_image(image, 'image-transposed.png', (1, 0, 2))
     create_histogram(image, 'histogram.png')
+    change_colorspace(image, [
+        "image-grayscale.png",
+        "image-hsv-h.png",
+        "image-hsv-s.png",
+        "image-hsv-v.png"
+    ])
 
 # -- NOT USED -- #
 def traditional_project_point(coords: list, f: int):

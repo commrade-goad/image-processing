@@ -37,3 +37,11 @@ __Transpose image:__
 __Histogram:__
 
 ![img](./.github/histogram.png)
+
+__Change Colorspace:__
+
+- HSV perchannel output
+
+![img](./.github/image-hsv-h.png)
+![img](./.github/image-hsv-s.png)
+![img](./.github/image-hsv-v.png)
