@@ -14,9 +14,18 @@ __Translated image:__
 
 ![img](./.github/image-translated.png)
 
+
 __Rotated image:__
 
 ![img](./.github/image-rotated.png)
+
+__Rotated Eucliden image:__
+
+![img](./.github/image-rotated-euclidean.png)
+
+__Rotated Similarity image:__
+
+![img](./.github/image-rotated-similarity.png)
 
 __Scale image:__
 

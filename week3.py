@@ -12,9 +12,37 @@ def translate_image(image, output, tx, ty):
     cv.imwrite(output, cv.cvtColor(new_image, cv.COLOR_RGB2BGR))
     pass
 
-def rotate_image(image, output, angle, anchor = None):
+def rotate_image_euclidean(image, output, angle, anchor=None):
+    """
+    Rotate an image using Euclidean transformation (rotation + translation).
+
+    Args:
+        image: Input image
+        output: Output file path
+        angle: Rotation angle in degrees
+        anchor: Center of rotation (x, y). If None, image center is used.
+    """
     height, width = image.shape[:2]
-    scale = 1
+    center = (width // 2, height // 2)
+    if anchor is not None:
+        center = anchor
+
+    rot_mat = cv.getRotationMatrix2D(center, angle, 1.0)
+    new_image = cv.warpAffine(image, rot_mat, (width, height))
+    cv.imwrite(output, cv.cvtColor(new_image, cv.COLOR_RGB2BGR))
+
+def rotate_image_similarity(image, output, angle, scale=1.0, anchor=None):
+    """
+    Rotate and scale an image using similarity transformation (rotation + translation + uniform scaling).
+
+    Args:
+        image: Input image
+        output: Output file path
+        angle: Rotation angle in degrees
+        scale: Scaling factor (uniform in all directions)
+        anchor: Center of rotation (x, y). If None, image center is used.
+    """
+    height, width = image.shape[:2]
     center = (width // 2, height // 2)
     if anchor is not None:
         center = anchor
@@ -22,7 +50,6 @@ def rotate_image(image, output, angle, anchor = None):
     rot_mat = cv.getRotationMatrix2D(center, angle, scale)
     new_image = cv.warpAffine(image, rot_mat, (width, height))
     cv.imwrite(output, cv.cvtColor(new_image, cv.COLOR_RGB2BGR))
-    pass
 
 def scale_image(image, output, sx, sy):
     height, width = image.shape[:2]
@@ -118,7 +145,8 @@ if __name__ == "__main__":
     image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
 
     translate_image(image, 'image-translated.png', 20, 20)
-    rotate_image(image, 'image-rotated.png', 45)
+    rotate_image_euclidean(image, 'image-rotated-euclidean.png', 45)
+    rotate_image_similarity(image, 'image-rotated-similarity.png', 50)
     scale_image(image, 'image-scaled.png', 2, 2)
     affine_transform_image(image, 'image-affinet.png')
     perspective_transform_image(image, 'image-perspectivet.png')

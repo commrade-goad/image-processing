@@ -2,7 +2,7 @@
 
 pkgs.mkShell {
     packages = [
-        (pkgs.python312.withPackages(p: with p; [
+        (pkgs.python313.withPackages(p: with p; [
             numpy
             opencv4
         ]))
