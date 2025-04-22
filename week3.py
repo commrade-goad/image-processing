@@ -4,9 +4,9 @@ import cv2 as cv
 def translate_image(image, output, tx, ty):
     height, width = image.shape[:2]
     translation_mat = n.array([
-        [1, 0, tx],
-        [0, 1, ty],
-        [0, 0, 1]
+        [1, 0, tx], # mean that transform x by tx
+        [0, 1, ty], # mean that transform y by ty
+        [0, 0, 1] # just be here so the math didnt get broken
     ], dtype=n.float32)
     new_image = cv.warpPerspective(image, translation_mat, (width, height))
     cv.imwrite(output, cv.cvtColor(new_image, cv.COLOR_RGB2BGR))
@@ -54,7 +54,7 @@ def rotate_image_similarity(image, output, angle, scale=1.0, anchor=None):
 def scale_image(image, output, sx, sy):
     height, width = image.shape[:2]
     scale_mat = n.array([
-        [sx, 0 , 0],
+        [sx, 0 , 0], # look from the transform and you will understand just change the scale
         [0 , sy, 0],
         [0 , 0 , 1]
     ], dtype=n.float32)
@@ -65,12 +65,12 @@ def scale_image(image, output, sx, sy):
 def affine_transform_image(image, output):
     height, width = image.shape[:2]
     src_points = n.array([
-        [50, 50],
+        [50, 50], # set point x,y
         [200, 50],
         [50, 200]
     ], dtype=n.float32)
     dst_points = n.array([
-        [10, 100],
+        [10, 100], # move that point to new x, y
         [200, 50],
         [100, 250]
     ], dtype=n.float32)
@@ -82,13 +82,13 @@ def affine_transform_image(image, output):
 def perspective_transform_image(image, output):
     height, width = image.shape[:2]
     src_points = n.array([
-        [0, 0],
+        [0, 0], # the same as before its x, y of the point you want
         [width - 1, 0],
         [0, height - 1],
         [width - 1, height - 1]
     ], dtype=n.float32)
     dst_points = n.array([
-        [50, 50],
+        [50, 50], # dest of that point
         [width - 90, 50],
         [50, height - 50],
         [width - 50, height - 50]
